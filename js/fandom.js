@@ -1362,7 +1362,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let actionBtnText = "Detayları Gör";
             let actionAttr = "";
 
-            if (v.id === "vendor-mason") {
+            if (v.id === "vendor-mason" || v.id === "vendor-sebastian") {
                 actionBtnText = "🏡 Evleri Gez & Tasarla";
                 actionAttr = 'data-action="goto-houses"';
             } else if (v.id === "vendor-hunter") {
@@ -1422,9 +1422,9 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (v.id === "vendor-ozalp") {
                 actionBtnText = "👕 Odcaf Tişörtleri (300 Cash)";
                 actionAttr = 'data-action="filter-odcaf-tshirts"';
-            } else if (v.id === "npc-emre") {
-                actionBtnText = "💬 Emre ile Konuş";
-                actionAttr = 'data-action="dialogue-emre"';
+            } else if (v.id === "vendor-emre" || v.id === "npc-emre") {
+                actionBtnText = "🛋️ Odcaf Mobilyaları (Emre)";
+                actionAttr = 'data-action="filter-odcaf-furniture"';
             } else if (v.id === "npc-ether-lord") {
                 actionBtnText = "💬 Ether Lord ile Konuş";
                 actionAttr = 'data-action="dialogue-ether-lord"';
@@ -1572,8 +1572,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert('Cem:\n"Ben çalışıyorum! Seninle Tolga uğraşsın."');
                 } else if (action === "dialogue-taner") {
                     alert('Taner [DEV]:\n"Flash öldü ama Minifal yaşıyor! Oyunu modern web teknolojileriyle sıfırdan hayata döndürüyoruz."');
+                } else if (action === "filter-odcaf-furniture") {
+                    const katalog = document.getElementById("katalog");
+                    if (katalog) {
+                        state.activeCategory = "furniture";
+                        updateActiveCategoryButton("furniture");
+                        state.searchQuery = "Odcaf";
+                        const searchInput = document.getElementById("search-input");
+                        if (searchInput) searchInput.value = "Odcaf";
+                        renderCards();
+                        katalog.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                        window.location.href = "./index.html?cat=furniture#katalog";
+                    }
                 } else if (action === "dialogue-emre") {
-                    alert('Emre:\n"Gözlüklerimi taktım, kodları yazıyorum! Odcaf ekibi tam gaz çalışıyor."');
+                    alert('Emre:\n"Odcaf ofisine hoş geldin! Odcaf logolu arcade makineleri, robot heykelleri, oyun konsolları ve özel mobilyalar benden sorulur."');
                 } else if (action === "dialogue-ether-lord") {
                     alert('Ether Lord:\n"..."');
                 } else if (action === "filter-odcaf-tshirts") {
